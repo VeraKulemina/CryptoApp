@@ -1,38 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import ListItem from './components/ListItem';
 
 export default App = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch('https://api.coincap.io/v2/assets')
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
-
-  
-
-  return (
-
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <Text>Loading...</Text> : 
-      ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
-          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>accets</Text>
-          <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
-          <FlatList
-          data={data.data}
-          keyExtractor={({data}) => data.id}
-          renderItem={({item}) => (
-            <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
-              {item.symbol}, {item.priceUsd}
-            </Text>
-            )}
-          />
+    return  (
+    <View style={styles.container}>
+        <View style={styles.titleWrapper}>
+        <Text style={styles.largeTitle}>Hello World</Text>
+        {/* <StatusBar style="auto"/> */}
         </View>
-      )}
+        <View style={styles.divider}/>
+        <ListItem/>
     </View>
-  );
-};
+
+    );
+}
+
+const styles = StyleSheet.create({
+container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    },
+    titleWrapper:{
+    marginTop: 80,
+    paddingHorizontal: 16,
+    },
+    largeTitle: {
+    fornSize: 24,
+    fontWeight: "bold",
+    },
+    divider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "#A9ABB1",
+    marginHorizontal: 16,
+    marginTop: 16,
+
+    }
+});
+
+
+
