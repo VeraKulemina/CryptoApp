@@ -21,7 +21,7 @@ export default App = () => {
           <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
           <FlatList
           data={data.data}
-          keyExtractor={({item}) => item.id}
+          keyExtractor={(item) => item.id}
           renderItem={({item}) => (
             <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
               {item.symbol}, {item.priceUsd}
@@ -33,3 +33,5 @@ export default App = () => {
     </View>
   );
 }
+
+// https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=7d
