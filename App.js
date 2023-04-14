@@ -45,3 +45,14 @@ export default App = () => {
   );
 };
 
+<<<<<<< HEAD
+=======
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+>>>>>>> parent of e8b67de (123)
