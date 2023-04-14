@@ -21,7 +21,7 @@ export default App = () => {
           <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
           <FlatList
           data={data.data}
-          keyExtractor={({data}) => data.id}
+          keyExtractor={({item}) => item.id}
           renderItem={({item}) => (
             <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
               {item.symbol}, {item.priceUsd}
