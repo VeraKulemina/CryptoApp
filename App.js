@@ -55,4 +55,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
->>>>>>> parent of e8b67de (123)
