@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
+import ListItem from './components/ListItem'; 
 
 export default App = () => {
   const [isLoading, setLoading] = useState(true);
@@ -14,24 +15,64 @@ export default App = () => {
   }, []);
   return (
 
-  <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <Text>Loading...</Text> : 
-      ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
-          <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>accets</Text>
-          <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
-          <FlatList
-          data={data.data}
-          keyExtractor={(item) => item.id}
-          renderItem={({item}) => (
-            <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
-              {item.symbol}, {item.priceUsd}
-            </Text>
-            )}
-          />
-        </View>
-      )}
-    </View>
+  // <View style={{ flex: 1, padding: 24 }}>
+  //     {isLoading ? <Text>Loading...</Text> : 
+  //     ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
+  //         <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>accets</Text>
+  //         <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
+  //         <FlatList
+  //         data={data.data}
+  //         keyExtractor={(item) => item.id}
+  //         renderItem={({item}) => (
+  //           <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
+  //             {item.symbol}, {item.priceUsd}
+  //           </Text>
+  //           )}
+  //         />
+  //       </View>
+  //     )}
+  //   </View>
+  <View style={styles.container}>
+    <View style={styles.titleWrapper}>
+    <Text style={styles.largeTitle}>Markets</Text>
+    </View >
+    <View style={styles.divider}/>
+    <FlatList 
+    data={data}
+    keyExtractor={(item) => item.id}
+    renderItem={({item}) => (
+      <ListItem 
+    name={item.name}
+    currentPrice={item.currentPrice}
+    logo={item.logo}
+    priceChange7d={item.priceChange7d}
+    symbol={item.symbol}
+    />
+    )}
+    />
+  </View>
   );
 }
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  titleWrapper:{
+    marginTop: 80,
+    paddingHorizontal: 16,
+  },
+  largeTitle:{
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  divider: {
+    height: StyleSheet.hailineWidth,
+    backgroundColor: "#A9ABB1",
+    marginHorizontal: 16,
+    marginTop: 16,
+  }
+})
 // https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=7d

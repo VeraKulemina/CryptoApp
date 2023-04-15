@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default ListItem=({name, symbol, currentPrice, price7d, logo}) =>{
+export default ListItem=({name, symbol, currentPrice, priceChange7d, logo}) =>{
+  const priceChangeColor = priceChange7d > 0 ? "#34C759" : "#FF3B30";
     return (
     <TouchableOpacity>
          <View style={styles.itemWrapper}>
@@ -15,8 +15,8 @@ export default ListItem=({name, symbol, currentPrice, price7d, logo}) =>{
             </View>
             {/* right side */}
             <View style={styles.rigthWrapper}>
-                <Text style={styles.title}>{currentPrice}</Text>
-                <Text style={[styles.subtitle, {color: "red"}]}>{price7d}</Text>
+                <Text style={styles.title}>$ {currentPrice.toLocaleString('es-US', { currency: 'USD'})}</Text>
+                <Text style={[styles.subtitle, {color: priceChangeColor}]}>{priceChange7d.toFixed(2)} %</Text>
             </View>
         </View>
     </TouchableOpacity>
