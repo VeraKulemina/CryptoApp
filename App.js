@@ -1,56 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, SafeAreaView, StyleSheet } from 'react-native';
 import ListItem from './components/ListItem'; 
+import  {SAMPLE_DATA} from './assets/data/sampleData'
+
+const ListHeader = () => (
+  <>
+    <View style={styles.titleWrapper}>
+        <Text style={styles.largeTitle}>Markets</Text>
+      </View >
+    <View style={styles.divider}/>
+  </>
+)
 
 export default App = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch('https://api.coincap.io/v2/assets')
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=7d')
+  //     .then((response) => response.json())
+  //     .then((data) => setData(data))
+  //     .catch((error) => console.error(error))
+  //     .finally(() => setLoading(false));
+  // }, []);
   return (
-
-  // <View style={{ flex: 1, padding: 24 }}>
-  //     {isLoading ? <Text>Loading...</Text> : 
-  //     ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
-  //         <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>accets</Text>
-  //         <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
-  //         <FlatList
-  //         data={data.data}
-  //         keyExtractor={(item) => item.id}
-  //         renderItem={({item}) => (
-  //           <Text style={{ fontSize: 14, color: 'black', paddingBottom: 20}}>
-  //             {item.symbol}, {item.priceUsd}
-  //           </Text>
-  //           )}
-  //         />
-  //       </View>
-  //     )}
-  //   </View>
-  <View style={styles.container}>
-    <View style={styles.titleWrapper}>
-    <Text style={styles.largeTitle}>Markets</Text>
-    </View >
-    <View style={styles.divider}/>
+  <SafeAreaView style={styles.container}>
+    
     <FlatList 
-    data={data}
+    data={SAMPLE_DATA}
     keyExtractor={(item) => item.id}
     renderItem={({item}) => (
       <ListItem 
     name={item.name}
-    currentPrice={item.currentPrice}
-    logo={item.logo}
-    priceChange7d={item.priceChange7d}
+    currentPrice={item.current_price}
+    logo={item.image}
+    priceChange7d={item.price_change_percentage_7d_in_currency}
     symbol={item.symbol}
     />
     )}
+    ListHeaderComponent={<ListHeader />}
     />
-  </View>
+  </SafeAreaView>
   );
 }
 
@@ -61,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   titleWrapper:{
-    marginTop: 80,
+    marginTop: 20,
     paddingHorizontal: 16,
   },
   largeTitle:{
