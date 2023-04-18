@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import ListItem from './components/ListItem'; 
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
-
 import  {SAMPLE_DATA} from './assets/data/sampleData'
 
 const ListHeader = () => (
@@ -20,30 +15,31 @@ const ListHeader = () => (
 export default App = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  
-  const bottomSheetModalRef = useRef(null);
 
-  const snapPoints = useMemo(() => ['50%'], []);
-
-
+  // useEffect(() => {
+  //   fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=7d')
+  //     .then((response) => response.json())
+  //     .then((data) => setData(data))
+  //     .catch((error) => console.error(error))
+  //     .finally(() => setLoading(false));
+  // }, []);
   return (
-  <SafeAreaView style={styles.container}> 
+  <SafeAreaView style={styles.container}>
     
     <FlatList 
-    data={SAMPLE_DATA}
+    data={data}
     keyExtractor={(item) => item.id}
     renderItem={({item}) => (
       <ListItem 
     name={item.name}
-    currentPrice={item.current_price}
-    logo={item.image}
-    priceChange7d={item.price_change_percentage_7d_in_currency}
+    currentPrice={item.currentPrice}
+    logo={item.logo}
+    priceChange7d={item.priceChange7d}
     symbol={item.symbol}
     />
     )}
-    ListHeaderComponent={<ListHeader />}
     />
-  </SafeAreaView>
+  </View>
   );
 }
 
@@ -54,7 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   titleWrapper:{
-    marginTop: 20,
+    marginTop: 80,
     paddingHorizontal: 16,
   },
   largeTitle:{
