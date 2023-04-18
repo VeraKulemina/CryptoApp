@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
 import  {SAMPLE_DATA} from './assets/data/sampleData'
 
@@ -27,22 +27,22 @@ export default App = () => {
   <SafeAreaView style={styles.container}>
     
     <FlatList 
-    data={data}
+    data={SAMPLE_DATA}
     keyExtractor={(item) => item.id}
     renderItem={({item}) => (
       <ListItem 
     name={item.name}
-    currentPrice={item.currentPrice}
-    logo={item.logo}
-    priceChange7d={item.priceChange7d}
+    currentPrice={item.current_price}
+    logo={item.image}
+    priceChange7d={item.price_change_percentage_7d_in_currency}
     symbol={item.symbol}
     />
     )}
-    />
-  </View>
-  );
+    ListHeaderComponent={<ListHeader />}
+      />
+      </SafeAreaView>
+);
 }
-
 
 const styles = StyleSheet.create({
   container: {
