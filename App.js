@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
 import  {SAMPLE_DATA} from './assets/data/sampleData';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+
+
+
 
 const ListHeader = () => (
   <>
@@ -15,6 +22,7 @@ const ListHeader = () => (
 export default App = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  
 
 
   return (
