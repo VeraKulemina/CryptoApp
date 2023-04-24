@@ -6,7 +6,6 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import Chart from './components/Chart'; 
 
 
 
@@ -22,15 +21,7 @@ const ListHeader = () => (
 
 export default App = () => {
   const [data, setData] = useState([]);
-  const [selectedCoinData, setSelectedCoinData] = useState(null);
   
-  const bottomSheetModalRef = useRef(null);
-
-  const snapPoints = useMemo(() => ['50%'], []);
-
-  const openModal = (item) => {
-    setSelectedCoinData(item);
-    bottomSheetModalRef.current.present();}
 
 
   return (
@@ -92,7 +83,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#A9ABB1',
     marginHorizontal: 16,
     marginTop: 16,
-  },
   bottomSheet: {
     shadowColor: "#000",
     shadowOffset: {
