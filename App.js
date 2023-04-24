@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
 import  {SAMPLE_DATA} from './assets/data/sampleData';
+import Chart from './components/Chart'; 
+
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -29,7 +31,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <FlatList
         keyExtractor={(item) => item.id}
-        data={data}
+        data={SAMPLE_DATA}
         renderItem={({ item }) => (
           <ListItem
             name={item.name}
@@ -45,12 +47,12 @@ export default function App() {
       </SafeAreaView>
 
       <BottomSheetModal
-        ref={bottomSheetModalRef}
+        // ref={bottomSheetModalRef}
         index={0}
-        snapPoints={snapPoints}
+        // snapPoints={snapPoints}
         style={styles.bottomSheet}
       >
-        { selectedCoinData ? (
+        {/* { selectedCoinData ? ( */}
           <Chart
             currentPrice={selectedCoinData.current_price}
             logoUrl={selectedCoinData.image}
@@ -59,7 +61,7 @@ export default function App() {
             priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
             sparkline={selectedCoinData?.sparkline_in_7d.price}
           />
-        ) : null}
+        {/* ) : null} */}
       </BottomSheetModal>
       </BottomSheetModalProvider>
   );
