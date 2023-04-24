@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
 import  {SAMPLE_DATA} from './assets/data/sampleData';
-import Chart from './components/Chart'; 
-
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -23,7 +21,6 @@ const ListHeader = () => (
 
 export default function App() {
   const [data, setData] = useState([]);
-  
 
 
   return (
