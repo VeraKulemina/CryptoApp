@@ -1,80 +1,95 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
-import ListItem from './components/ListItem'; 
-import  {SAMPLE_DATA} from './assets/data/sampleData';
+import React, {useRef, useMemo, useState, useEffect} from 'react';
+import { FlatList, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import ListItem from './components/ListItem';
+import Chart from './components/Chart';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-
-
-
+// import { getMarketData } from './services/cryptoService';
 
 const ListHeader = () => (
   <>
     <View style={styles.titleWrapper}>
         <Text style={styles.largeTitle}>Markets</Text>
-      </View >
-    <View style={styles.divider}/>
+      </View>
+    <View style={styles.divider} />
   </>
 )
 
-export default App = () => {
+export default function App() {
   const [data, setData] = useState([]);
-  
+  const [selectedCoinData, setSelectedCoinData] = useState(null);
 
+  useEffect(() => {
+    const fetchMarketData = async () => {
+      const marketData = await getMarketData();
+      setData(marketData);
+    }
+
+    fetchMarketData();
+  }, [])
+
+  const bottomSheetModalRef = useRef(null);
+
+  const snapPoints = useMemo(() => ['50%'], []);
+
+  const openModal = (item) => {
+    setSelectedCoinData(item);
+    bottomSheetModalRef.current?.present();
+  }
 
   return (
-  <BottomSheetModalProvider>
+    <BottomSheetModalProvider>
     <SafeAreaView style={styles.container}>
-    
-    <FlatList 
-    data={SAMPLE_DATA}
-    keyExtractor={(item) => item.id}
-    renderItem={({item}) => (
-      <ListItem 
-    name={item.name}
-    currentPrice={item.current_price}
-    logo={item.image}
-    priceChange7d={item.price_change_percentage_7d_in_currency}
-    symbol={item.symbol}
-    onPress={() => openModal(item)}
-    />
-    )}
-    ListHeaderComponent={<ListHeader />}
+      <FlatList
+        keyExtractor={(item) => item.id}
+        data={data}
+        renderItem={({ item }) => (
+          <ListItem
+            name={item.name}
+            symbol={item.symbol}
+            currentPrice={item.current_price}
+            priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
+            logoUrl={item.image}
+            onPress={() => openModal(item)}
+          />
+        )}
+        ListHeaderComponent={<ListHeader />}
       />
-    </SafeAreaView>
-    <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={0}
-          snapPoints={snapPoints}
-          style={styles.bottomSheet}
-    >
-      { selectedCoinData ? (
-      <Chart
-      currentPrice={selectedCoinData.current_price}
-      logo={selectedCoinData.image}
-      name={selectedCoinData.name}
-      symbol={selectedCoinData.symbol}
-      priceChange7d={selectedCoinData.price_change_percentage_7d_in_currency}
-      sparkline={selectedCoinData.sparkline_in_7d.price}
-      />
-      ) : null}
-    </BottomSheetModal>
-  </BottomSheetModalProvider>
-);
+      </SafeAreaView>
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        style={styles.bottomSheet}
+      >
+        { selectedCoinData ? (
+          <Chart
+            currentPrice={selectedCoinData.current_price}
+            logoUrl={selectedCoinData.image}
+            name={selectedCoinData.name}
+            symbol={selectedCoinData.symbol}
+            priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
+            sparkline={selectedCoinData?.sparkline_in_7d.price}
+          />
+        ) : null}
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
-  titleWrapper:{
-    marginTop: 80,
+  titleWrapper: {
+    marginTop: 20,
     paddingHorizontal: 16,
   },
-  largeTitle:{
+  largeTitle: {
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -83,6 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#A9ABB1',
     marginHorizontal: 16,
     marginTop: 16,
+  },
   bottomSheet: {
     shadowColor: "#000",
     shadowOffset: {
@@ -93,6 +109,4 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-})
-
-// https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=true&price_change_percentage=7d
+});
