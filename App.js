@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
+import Chart from './components/Chart'; 
+
 import  {SAMPLE_DATA} from './assets/data/sampleData';
 import {
   BottomSheetModal,
@@ -34,9 +36,9 @@ export default function App() {
             name={item.name}
             symbol={item.symbol}
             currentPrice={item.current_price}
-            priceChangePercentage7d={item.price_change_percentage_7d_in_currency}
-            logoUrl={item.image}
-            onPress={() => openModal(item)}
+            priceChange7d={item.price_change_percentage_7d_in_currency}
+            logo={item.image}
+            // onPress={() => openModal(item)}
           />
         )}
         ListHeaderComponent={<ListHeader />}
@@ -50,14 +52,14 @@ export default function App() {
         style={styles.bottomSheet}
       >
         {/* { selectedCoinData ? ( */}
-          <Chart
+          {/* <Chart
             currentPrice={selectedCoinData.current_price}
             logoUrl={selectedCoinData.image}
             name={selectedCoinData.name}
             symbol={selectedCoinData.symbol}
             priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
             sparkline={selectedCoinData?.sparkline_in_7d.price}
-          />
+          /> */}
         {/* ) : null} */}
       </BottomSheetModal>
       </BottomSheetModalProvider>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native'
-import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
-import { useSharedValue } from 'react-native-reanimated';
+// import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
+// import { useSharedValue } from 'react-native-reanimated';
 
 const { width: SIZE } = Dimensions.get('window');
 
 
 const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }) => {
-  const latestCurrentPrice = useSharedValue(currentPrice);
+  // const latestCurrentPrice = useSharedValue(currentPrice);
   const [chartReady, setChartReady] = useState(false);
 
   const priceChangeColor = priceChange7d > 0 ? '#34C759' : '#FF3B30';
@@ -37,7 +37,7 @@ const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }
   }
 
   return (
-    <ChartPathProvider data={{ points: sparkline, smoothingStrategy: 'bezier' }}>
+    // <ChartPathProvider data={{ points: sparkline, smoothingStrategy: 'bezier' }}>
       <View style={styles.chartWrapper}>
 
         {/* Titles */}
@@ -50,15 +50,15 @@ const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }
             <Text style={styles.subtitle}>7d</Text>
           </View>
           <View style={styles.lowerTitles}>
-            <ChartYLabel
+            {/* <ChartYLabel
               format={formatUSD}
               style={styles.boldTitle}
-            />
+            /> */}
             <Text style={[styles.title, {color: priceChangeColor}]}>{priceChange7d.toFixed(2)}%</Text>
           </View>
         </View>
 
-        { chartReady ?
+        {/* { chartReady ?
         (<View style={styles.chartLineWrapper}>
           <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
           <ChartDot style={{ backgroundColor: 'black' }} />
@@ -68,10 +68,10 @@ const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }
 
           null
         
-        }
+        } */}
         
       </View>
-    </ChartPathProvider>
+    // </ChartPathProvider>
   )
 }
 
