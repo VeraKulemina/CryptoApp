@@ -1,78 +1,73 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions, ActivityIndicator } from 'react-native'
-// import {ChartDot, ChartPath, ChartPathProvider, ChartYLabel} from '@rainbow-me/animated-charts';
-// import { useSharedValue } from 'react-native-reanimated';
+import { View, Text, StyleSheet, Image } from 'react-native'
+import React from 'react'
+// import {ChartDot, ChartPath, ChartPathProvider} from '@rainbow-me/animated-charts';
 
-const { width: SIZE } = Dimensions.get('window');
+// import { beginEvent } from 'react-native/Libraries/Performance/Systrace'
 
+const Chart = ({name, symbol, currentPrice, priceChange7d, logo, sparkline}) => {
 
-const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }) => {
-  // const latestCurrentPrice = useSharedValue(currentPrice);
-  const [chartReady, setChartReady] = useState(false);
-
-  const priceChangeColor = priceChange7d > 0 ? '#34C759' : '#FF3B30';
-
-  useEffect(() => {
-    latestCurrentPrice.value = currentPrice;
-
-    setTimeout(() => {
-      setChartReady(true);
-    }, 0)
-
-  }, [currentPrice])
-
-  const formatUSD = value => {
-    'worklet';
-    if (value === '') {
-      const formattedValue = `$${latestCurrentPrice.value.toLocaleString('en-US', { currency: 'USD' })}`
-      return formattedValue;
-    }
-
-    const formattedValue =`$${parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
-    return formattedValue;
-  };
-
-  if (sparkline.length === 0) {
-    return <Text>Loading...</Text>
-  }
+  const priceChangeColor = priceChange7d > 0 ? "#34C759" : "#FF3B30";
 
   return (
-    // <ChartPathProvider data={{ points: sparkline, smoothingStrategy: 'bezier' }}>
-      <View style={styles.chartWrapper}>
-
-        {/* Titles */}
-        <View style={styles.titlesWrapper}>
-          <View style={styles.upperTitles}>
-            <View style={styles.upperLeftTitle}>
-              <Image source={{ uri: logoUrl }} style={styles.image} />
-              <Text style={styles.subtitle}>{name} ({symbol.toUpperCase()})</Text>
-            </View>
-            <Text style={styles.subtitle}>7d</Text>
+    // <ChartPathProvider>
+    <View style={styles.chartWrapper}>
+      {/* titles */}
+      <View style={styles.titlesWrapper}>
+        <View style={styles.upperTitles}>
+          <View style={styles.upperLeftTitle}>
+            <Image source= {{uri: logo}} style={styles.image}/>
+            <Text style={styles.subTitle}>{name} ({symbol.toUpperCase()})</Text>
           </View>
-          <View style={styles.lowerTitles}>
-            {/* <ChartYLabel
-              format={formatUSD}
-              style={styles.boldTitle}
-            /> */}
-            <Text style={[styles.title, {color: priceChangeColor}]}>{priceChange7d.toFixed(2)}%</Text>
-          </View>
+          <Text style={styles.subTitle}>7days</Text>
         </View>
-
-        {/* { chartReady ?
-        (<View style={styles.chartLineWrapper}>
-          <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
-          <ChartDot style={{ backgroundColor: 'black' }} />
-          </View>)
-
-          :
-
-          null
-        
-        } */}
-        
-      </View>
+        <View style={styles.lowerTitles}>
+          <Text style={styles.boldTitle}>${currentPrice.toLocaleString('en-US', { currency: 'USD' })}</Text>
+          <Text style={[styles.title, {color: priceChangeColor}]}>{priceChange7d.toFixed(2)}%</Text>
+        </View>
+      </View> 
+    </View>
     // </ChartPathProvider>
   )
 }
 
-export default Chart
+const styles = StyleSheet.create({
+  chartWrapper: {
+    margin: 16
+  
+  },
+  titlesWrapper: {
+
+  },
+  upperTitles: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  upperLeftTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  image: {
+    width: 24,
+    height: 24, 
+    margin: 4,
+  },
+  subTitle: {
+    fontSize: 14,
+    color: "#A9ABB1",
+  },
+  lowerTitles: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  boldTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  title: {
+    fontSize: 18,
+  }
+})
+
+export default Chart;

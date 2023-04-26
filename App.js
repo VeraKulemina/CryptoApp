@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem'; 
 import Chart from './components/Chart'; 
@@ -22,8 +22,15 @@ const ListHeader = () => (
 )
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [selectedCoinData, setSelectedCoinData] = useState(null);
 
+
+  const bottomSheetModalRef = useRef(null);
+
+  const snapPoints = useMemo(() => ['50%'], []);
+  const openModal = (item) => { 
+    setSelectedCoinData(item);
+    bottomSheetModalRef.current?.present();}
 
   return (
     <BottomSheetModalProvider>
@@ -38,7 +45,7 @@ export default function App() {
             currentPrice={item.current_price}
             priceChange7d={item.price_change_percentage_7d_in_currency}
             logo={item.image}
-            // onPress={() => openModal(item)}
+            onPress={() => openModal(item)}
           />
         )}
         ListHeaderComponent={<ListHeader />}
@@ -46,21 +53,21 @@ export default function App() {
       </SafeAreaView>
 
       <BottomSheetModal
-        // ref={bottomSheetModalRef}
+        ref={bottomSheetModalRef}
         index={0}
-        // snapPoints={snapPoints}
+        snapPoints={snapPoints}
         style={styles.bottomSheet}
       >
-        {/* { selectedCoinData ? ( */}
-          {/* <Chart
-            currentPrice={selectedCoinData.current_price}
-            logoUrl={selectedCoinData.image}
-            name={selectedCoinData.name}
-            symbol={selectedCoinData.symbol}
-            priceChangePercentage7d={selectedCoinData.price_change_percentage_7d_in_currency}
-            sparkline={selectedCoinData?.sparkline_in_7d.price}
-          /> */}
-        {/* ) : null} */}
+        { selectedCoinData ? (
+        <Chart 
+          name={selectedCoinData.name}
+          symbol={selectedCoinData.symbol}
+          currentPrice={selectedCoinData.current_price}
+          priceChange7d={selectedCoinData.price_change_percentage_7d_in_currency}
+          logo={selectedCoinData.image}
+          sparkline={selectedCoinData.sparkline_in_7d.price}
+          /> )
+          : null }
       </BottomSheetModal>
       </BottomSheetModalProvider>
   );
