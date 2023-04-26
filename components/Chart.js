@@ -75,46 +75,4 @@ const Chart = ({ currentPrice, logoUrl, name, symbol, priceChange7d, sparkline }
   )
 }
 
-const styles = StyleSheet.create({
-  chartWrapper: {
-    marginVertical: 16
-  },
-  titlesWrapper: {
-    marginHorizontal: 16
-  },
-  upperTitles: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  upperLeftTitle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  image: {
-    width: 24,
-    height: 24,
-    marginRight: 4,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#A9ABB1',
-  },
-  lowerTitles: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  boldTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  title: {
-    fontSize: 18,
-  },
-  chartLineWrapper: {
-    marginTop: 40,
-  },
-});
-
 export default Chart
