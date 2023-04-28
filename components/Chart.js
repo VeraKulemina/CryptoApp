@@ -8,6 +8,7 @@ const Chart = ({name, symbol, currentPrice, priceChange7d, logo, sparkline}) => 
 
   const priceChangeColor = priceChange7d > 0 ? "#34C759" : "#FF3B30";
 
+  
   return (
     <ChartPathProvider>
     <View style={styles.chartWrapper}>
