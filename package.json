@@ -20,6 +20,7 @@
     "react-native-haptic-feedback": "^2.0.3",
     "react-native-reanimated": "2.14.4",
     "react-native-wagmi-charts": "^2.3.0"
+    
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
